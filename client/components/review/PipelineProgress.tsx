@@ -35,7 +35,7 @@ export function PipelineProgress({ steps, currentStep, nextStep, className }: Pi
                   <span className="h-px flex-1 bg-transparent" />
                   <span
                     className={cn(
-                      "flex size-7 shrink-0 items-center justify-center rounded-md border text-[10px] font-bold",
+                      "flex size-7 shrink-0 items-center justify-center rounded-md border text-meta font-bold",
                       stateStyles[step.state],
                     )}
                     title={`${step.name}: ${step.state}`}
@@ -51,7 +51,7 @@ export function PipelineProgress({ steps, currentStep, nextStep, className }: Pi
                     <span className="h-px flex-1 bg-transparent" />
                   )}
                 </div>
-                <span className="max-w-[96px] truncate text-center font-mono text-[10px] text-ink-muted">
+                <span className="max-w-[96px] truncate text-center font-mono text-meta text-ink-muted">
                   {step.name}
                 </span>
               </div>
@@ -60,7 +60,7 @@ export function PipelineProgress({ steps, currentStep, nextStep, className }: Pi
         })}
       </div>
       {currentStep || nextStep ? (
-        <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1 border-t border-line pt-2.5 text-[11px]">
+        <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1 border-t border-line pt-2.5 text-meta">
           {currentStep ? (
             <span className="text-ink-muted">
               Текущий шаг <strong className="font-mono font-medium text-status-running">{currentStep}</strong>

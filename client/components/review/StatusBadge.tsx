@@ -64,7 +64,7 @@ export function StatusBadge({ status, compact = false, className }: StatusBadgeP
   return (
     <span
       className={cn(
-        "inline-flex w-fit items-center gap-1.5 border px-2 py-1 text-[11px] font-semibold leading-none tracking-[0.01em]",
+        "inline-flex w-fit items-center gap-1.5 border px-2 py-1 text-label font-semibold",
         compact ? "rounded-[4px]" : "rounded-md",
         config.className,
         className,

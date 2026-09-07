@@ -56,7 +56,7 @@ export function DataTable<T>({
               <th
                 key={column.key}
                 className={cn(
-                  "px-3 py-2.5 text-left text-[10px] font-semibold uppercase tracking-[0.08em] text-ink-subtle",
+                  "px-3 py-2.5 text-left text-label font-semibold text-ink-subtle",
                   column.numeric && "text-right",
                   priorityClass(column.priority),
                   column.className,
@@ -91,8 +91,8 @@ export function DataTable<T>({
                   <div className="mb-3 flex size-9 items-center justify-center rounded-lg border border-line-strong bg-surface-muted text-ink-subtle">
                     <span className="size-2 rounded-full bg-ink-subtle" />
                   </div>
-                  <p className="text-sm font-semibold text-ink">{emptyTitle}</p>
-                  <p className="mt-1 max-w-xs text-xs leading-5 text-ink-muted">{emptyDescription}</p>
+                  <p className="text-body font-semibold text-ink">{emptyTitle}</p>
+                  <p className="mt-1 max-w-xs text-body-sm text-ink-muted">{emptyDescription}</p>
                 </div>
               </td>
             </tr>
@@ -126,7 +126,7 @@ export function DataTable<T>({
                       <td
                         key={column.key}
                         className={cn(
-                          "px-3 py-3 text-xs text-ink-muted",
+                          cn("px-3 text-body-sm text-ink-muted", column.key === "task" ? "py-4" : "py-3"),
                           column.numeric && "text-right",
                           priorityClass(column.priority),
                           column.className,

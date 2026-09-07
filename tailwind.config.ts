@@ -99,6 +99,12 @@ export default {
         sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
         mono: ["IBM Plex Mono", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
+      fontSize: {
+        body: ["14px", { lineHeight: "1.5" }],
+        "body-sm": ["13px", { lineHeight: "1.5" }],
+        label: ["12px", { lineHeight: "1.4" }],
+        meta: ["11px", { lineHeight: "1.4" }],
+      },
       spacing: {
         "token-1": "8px",
         "token-2": "16px",

@@ -17,7 +17,7 @@ export function AppShell({ children }: AppShellProps) {
                 <span className="absolute size-3.5 rounded-[4px] border-2 border-white/90" />
                 <span className="absolute size-1.5 rounded-full bg-white" />
               </span>
-              <span className="text-[14px] font-semibold tracking-[-0.02em] text-ink">AI Review Board</span>
+              <span className="text-body font-semibold text-ink">AI Review Board</span>
             </Link>
             <nav className="hidden items-center gap-1 md:flex" aria-label="Основная навигация">
               <NavLink
@@ -25,7 +25,7 @@ export function AppShell({ children }: AppShellProps) {
                 end
                 className={({ isActive }) =>
                   cn(
-                    "inline-flex items-center gap-2 border-b-2 px-3 py-[22px] text-xs font-medium transition-colors",
+                    "inline-flex items-center gap-2 border-b-2 px-3 py-[22px] text-label font-medium transition-colors",
                     isActive ? "border-brand text-ink" : "border-transparent text-ink-muted hover:text-ink",
                   )
                 }
@@ -36,7 +36,7 @@ export function AppShell({ children }: AppShellProps) {
                 to="/components"
                 className={({ isActive }) =>
                   cn(
-                    "inline-flex items-center gap-2 border-b-2 px-3 py-[22px] text-xs font-medium transition-colors",
+                    "inline-flex items-center gap-2 border-b-2 px-3 py-[22px] text-label font-medium transition-colors",
                     isActive ? "border-brand text-ink" : "border-transparent text-ink-muted hover:text-ink",
                   )
                 }
@@ -45,12 +45,12 @@ export function AppShell({ children }: AppShellProps) {
               </NavLink>
             </nav>
           </div>
-          <div className="flex items-center gap-4 text-xs">
+          <div className="flex items-center gap-4 text-label">
             <button type="button" className="hidden items-center gap-1.5 text-ink-muted transition-colors hover:text-ink sm:flex">
               <CircleHelp className="size-3.5" /> Помощь
             </button>
             <span className="hidden h-4 w-px bg-line-strong sm:block" />
-            <span className="font-mono text-[11px] text-ink-muted">real310@gmail.com</span>
+            <span className="text-meta text-ink-muted">real310@gmail.com</span>
             <button type="button" className="inline-flex items-center gap-1.5 text-ink-muted transition-colors hover:text-ink">
               <LogOut className="size-3.5" /> Выйти
             </button>

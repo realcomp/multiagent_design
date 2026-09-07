@@ -1,3 +1,5 @@
+"use client";
+
 import { useMemo, useState } from "react";
 import { ArrowUpRight, ChevronDown, Filter, Plus, Search, SlidersHorizontal } from "lucide-react";
 import { DataTable, type DataTableColumn } from "@/components/review/DataTable";
@@ -156,7 +158,7 @@ export default function Index() {
       header: "Дата",
       priority: "low",
       className: "w-[154px]",
-      render: (run) => <span className="font-mono text-[10px] text-ink-subtle">{run.date}</span>,
+      render: (run) => <span className="font-mono text-meta text-ink-subtle">{run.date}</span>,
     },
     {
       key: "task",
@@ -165,8 +167,7 @@ export default function Index() {
       className: "w-[min(40vw,460px)]",
       render: (run) => (
         <div className="min-w-0">
-          <p className="line-clamp-2 text-[13px] font-medium leading-[1.4] text-ink">{run.task}</p>
-          <p className="mt-1 truncate font-mono text-[9px] text-ink-subtle">{run.id}</p>
+          <p className="line-clamp-2 text-body font-medium text-ink">{run.task}</p>
         </div>
       ),
     },
@@ -192,13 +193,6 @@ export default function Index() {
       render: (run) => <Confidence value={run.confidence} />,
     },
     {
-      key: "profile",
-      header: "Профиль",
-      priority: "low",
-      className: "w-[86px]",
-      render: (run) => <span className="font-mono text-[11px] text-ink-muted">{run.profile}</span>,
-    },
-    {
       key: "cost",
       header: "Стоимость",
       priority: "high",
@@ -212,14 +206,13 @@ export default function Index() {
     <div className="mx-auto max-w-[1480px] px-5 py-7 sm:px-8 lg:py-9">
       <div className="mb-7 flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
         <div>
-          <p className="mb-2 font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-brand">Workspace / Review operations</p>
-          <h1 className="text-[30px] font-semibold tracking-[-0.045em] text-ink sm:text-[34px]">Запуски</h1>
-          <p className="mt-1.5 max-w-2xl text-sm text-ink-muted">Все проверки гипотез и решений в одном месте. Откройте строку, чтобы увидеть ход пайплайна.</p>
+          <h1 className="text-body font-semibold text-ink">Запуски</h1>
+          <p className="mt-1.5 max-w-2xl text-body-sm text-ink-muted">Все проверки гипотез и решений в одном месте. Откройте строку, чтобы увидеть ход пайплайна.</p>
         </div>
         <button
           type="button"
           onClick={() => setShowNewRun((value) => !value)}
-          className="inline-flex h-9 items-center justify-center gap-2 self-start rounded-md bg-brand px-3.5 text-xs font-semibold text-white transition-colors hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 lg:self-auto"
+          className="inline-flex h-9 items-center justify-center gap-2 self-start rounded-md bg-brand px-3.5 text-label font-semibold text-white transition-colors hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 lg:self-auto"
         >
           <Plus className="size-3.5" /> Новый run
         </button>
@@ -228,8 +221,8 @@ export default function Index() {
       {showNewRun ? (
         <div className="mb-6 border border-brand/25 bg-brand-soft p-4 sm:p-5">
           <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-            <div><p className="text-sm font-semibold text-ink">Новая проверка</p><p className="mt-1 text-xs text-ink-muted">Опишите гипотезу, которую нужно проверить несколькими независимыми ролями.</p></div>
-            <button type="button" className="inline-flex h-8 shrink-0 items-center justify-center gap-2 rounded-md border border-brand/30 bg-surface px-3 text-xs font-semibold text-brand hover:bg-brand-soft"><ArrowUpRight className="size-3.5" /> Открыть форму</button>
+            <div><p className="text-body font-semibold text-ink">Новая проверка</p><p className="mt-1 text-body-sm text-ink-muted">Опишите гипотезу, которую нужно проверить несколькими независимыми ролями.</p></div>
+            <button type="button" className="inline-flex h-8 shrink-0 items-center justify-center gap-2 rounded-md border border-brand/30 bg-surface px-3 text-label font-semibold text-brand hover:bg-brand-soft"><ArrowUpRight className="size-3.5" /> Открыть форму</button>
           </div>
         </div>
       ) : null}
@@ -245,12 +238,12 @@ export default function Index() {
         <div className="flex max-w-full items-center gap-1 overflow-x-auto border-b border-line pb-px" role="tablist" aria-label="Фильтр по статусу">
           {filters.map((filter) => {
             const active = activeFilter === filter.key;
-            return <button key={filter.key} type="button" role="tab" aria-selected={active} onClick={() => setActiveFilter(filter.key)} className={cn("flex shrink-0 items-center gap-1.5 border-b-2 px-2.5 py-2 text-xs transition-colors", active ? "border-brand font-semibold text-brand" : "border-transparent text-ink-muted hover:border-line-strong hover:text-ink")}><span>{filter.label}</span><span className={cn("font-mono text-[10px]", active ? "text-brand" : "text-ink-subtle")}>{counts[filter.key]}</span></button>;
+            return <button key={filter.key} type="button" role="tab" aria-selected={active} onClick={() => setActiveFilter(filter.key)} className={cn("flex shrink-0 items-center gap-1.5 border-b-2 px-2.5 py-2 text-label transition-colors", active ? "border-brand font-semibold text-brand" : "border-transparent text-ink-muted hover:border-line-strong hover:text-ink")}><span>{filter.label}</span><span className={cn("font-mono text-meta", active ? "text-brand" : "text-ink-subtle")}>{counts[filter.key]}</span></button>;
           })}
         </div>
         <div className="flex items-center gap-2">
-          <label className="relative block min-w-0 flex-1 sm:w-56 sm:flex-none"><Search className="pointer-events-none absolute left-2.5 top-1/2 size-3.5 -translate-y-1/2 text-ink-subtle" /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Поиск запусков" className="h-8 w-full border border-line-strong bg-surface pl-8 pr-3 text-xs text-ink outline-none placeholder:text-ink-subtle focus:border-brand focus:ring-1 focus:ring-brand" /></label>
-          <button type="button" className="inline-flex h-8 items-center gap-1.5 border border-line-strong bg-surface px-2.5 text-xs text-ink-muted hover:border-brand hover:text-brand"><SlidersHorizontal className="size-3.5" /> <span className="hidden sm:inline">Фильтры</span></button>
+          <label className="relative block min-w-0 flex-1 sm:w-56 sm:flex-none"><Search className="pointer-events-none absolute left-2.5 top-1/2 size-3.5 -translate-y-1/2 text-ink-subtle" /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Поиск запусков" className="h-8 w-full border border-line-strong bg-surface pl-8 pr-3 text-label text-ink outline-none placeholder:text-ink-subtle focus:border-brand focus:ring-1 focus:ring-brand" /></label>
+          <button type="button" className="inline-flex h-8 items-center gap-1.5 border border-line-strong bg-surface px-2.5 text-label text-ink-muted hover:border-brand hover:text-brand"><SlidersHorizontal className="size-3.5" /> <span className="hidden sm:inline">Фильтры</span></button>
         </div>
       </div>
 
@@ -265,26 +258,26 @@ export default function Index() {
         renderExpanded={(run) => <RunExpanded run={run} />}
       />
 
-      <div className="mt-4 flex flex-col justify-between gap-2 text-[10px] text-ink-subtle sm:flex-row sm:items-center"><span>Показано {visibleRuns.length} из {runs.length} запусков</span><span className="font-mono">Обновлено только что · UTC+3</span></div>
+      <div className="mt-4 flex flex-col justify-between gap-2 text-meta text-ink-subtle sm:flex-row sm:items-center"><span>Показано {visibleRuns.length} из {runs.length} запусков</span><span className="font-mono">Обновлено только что · UTC+3</span></div>
     </div>
   );
 }
 
 function Summary({ label, value, detail, tone = "neutral" }: { label: string; value: string; detail: string; tone?: "neutral" | "blue" | "green" }) {
-  return <div className="min-w-0 px-4 py-3.5 sm:px-5"><div className="flex items-center gap-2"><span className={cn("size-1.5 rounded-full", tone === "blue" ? "bg-brand" : tone === "green" ? "bg-status-success" : "bg-ink-subtle")} /><span className="truncate text-[10px] uppercase tracking-[0.08em] text-ink-subtle">{label}</span></div><p className="mt-1.5 font-mono text-xl font-medium tracking-[-0.04em] text-ink">{value}</p><p className="mt-0.5 truncate text-[10px] text-ink-subtle">{detail}</p></div>;
+  return <div className="min-w-0 px-4 py-3.5 sm:px-5"><div className="flex items-center gap-2"><span className={cn("size-1.5 rounded-full", tone === "blue" ? "bg-brand" : tone === "green" ? "bg-status-success" : "bg-ink-subtle")} /><span className="truncate text-label text-ink-subtle">{label}</span></div><p className="mt-1.5 font-mono text-body font-medium text-ink">{value}</p><p className="mt-0.5 truncate text-meta text-ink-subtle">{detail}</p></div>;
 }
 
 function Verdict({ value }: { value: Run["verdict"] }) {
-  if (value === "—") return <span className="font-mono text-xs text-ink-subtle">—</span>;
+  if (value === "—") return <span className="font-mono text-meta text-ink-subtle">—</span>;
   const label = value === "requires_user_data" ? "нужны данные" : "недостаточно данных";
-  return <span className={cn("inline-flex max-w-full items-center gap-1.5 text-[11px] font-medium", value === "requires_user_data" ? "text-status-warning" : "text-ink-muted")}><span className={cn("size-1.5 shrink-0 rounded-[2px]", value === "requires_user_data" ? "bg-status-warning" : "bg-ink-subtle")} /><span className="truncate">{label}</span></span>;
+  return <span className={cn("inline-flex max-w-full items-center gap-1.5 text-label font-medium", value === "requires_user_data" ? "text-status-warning" : "text-ink-muted")}><span className={cn("size-1.5 shrink-0 rounded-[2px]", value === "requires_user_data" ? "bg-status-warning" : "bg-ink-subtle")} /><span className="truncate">{label}</span></span>;
 }
 
 function Confidence({ value }: { value: Run["confidence"] }) {
-  if (value === "—") return <span className="font-mono text-xs text-ink-subtle">—</span>;
+  if (value === "—") return <span className="font-mono text-meta text-ink-subtle">—</span>;
   const level = value === "низкая" ? 1 : value === "средняя" ? 2 : 3;
   const color = value === "низкая" ? "bg-confidence-low" : value === "средняя" ? "bg-confidence-medium" : "bg-confidence-high";
-  return <div className="flex items-center gap-2" title={`Уверенность: ${value}`}><span className="flex items-end gap-[2px]" aria-hidden="true">{[1, 2, 3].map((bar) => <span key={bar} className={cn("w-1 rounded-[1px]", bar <= level ? color : "bg-line-strong")} style={{ height: 5 + bar * 3 }} />)}</span><span className="text-[10px] text-ink-muted">{value}</span></div>;
+  return <div className="flex items-center gap-2" title={`Уверенность: ${value}`}><span className="flex items-end gap-[2px]" aria-hidden="true">{[1, 2, 3].map((bar) => <span key={bar} className={cn("w-1 rounded-[1px]", bar <= level ? color : "bg-line-strong")} style={{ height: 5 + bar * 3 }} />)}</span><span className="text-label text-ink-muted">{value}</span></div>;
 }
 
 function RunExpanded({ run }: { run: Run }) {
@@ -295,5 +288,5 @@ function RunExpanded({ run }: { run: Run }) {
     if (run.progress && pipelineNames.indexOf(name) < pipelineNames.indexOf(run.progress.current)) return { name, state: "done" };
     return { name, state: "pending" };
   });
-  return <div className="grid gap-4 lg:grid-cols-[1fr_280px] lg:items-start"><div><div className="mb-3 flex items-center justify-between gap-3"><div><p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-ink-subtle">Прогресс пайплайна</p><p className="mt-1 text-xs text-ink-muted">Каждая роль выполняется отдельным вызовом модели.</p></div><span className="font-mono text-[10px] text-ink-subtle">7 ролей</span></div><PipelineProgress steps={steps} currentStep={run.progress?.current} nextStep={run.progress?.next} /></div><div className="border-l border-line pl-0 lg:pl-4"><p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-ink-subtle">Метаданные</p><dl className="mt-2 grid grid-cols-2 gap-x-4 gap-y-2 text-[11px]"><div><dt className="text-ink-subtle">profile</dt><dd className="mt-0.5 font-mono text-ink">{run.profile}</dd></div><div><dt className="text-ink-subtle">стоимость</dt><dd className="mt-0.5 font-mono text-ink">{run.cost}</dd></div><div className="col-span-2"><dt className="text-ink-subtle">run_id</dt><dd className="mt-0.5 truncate font-mono text-[10px] text-ink-muted">{run.id}</dd></div></dl></div></div>;
+  return <div className="grid gap-4 lg:grid-cols-[1fr_280px] lg:items-start"><div><div className="mb-3 flex items-center justify-between gap-3"><div><p className="text-label font-semibold text-ink-subtle">Прогресс пайплайна</p><p className="mt-1 text-body-sm text-ink-muted">Каждая роль выполняется отдельным вызовом модели.</p></div><span className="font-mono text-meta text-ink-subtle">7 ролей</span></div><PipelineProgress steps={steps} currentStep={run.progress?.current} nextStep={run.progress?.next} /></div><div className="border-l border-line pl-0 lg:pl-4"><p className="text-label font-semibold text-ink-subtle">Метаданные</p><dl className="mt-2 grid grid-cols-2 gap-x-4 gap-y-2 text-meta"><div><dt className="text-ink-subtle">profile</dt><dd className="mt-0.5 font-mono text-ink">{run.profile}</dd></div><div><dt className="text-ink-subtle">стоимость</dt><dd className="mt-0.5 font-mono text-ink">{run.cost}</dd></div><div className="col-span-2"><dt className="text-ink-subtle">run_id</dt><dd className="mt-0.5 truncate font-mono text-meta text-ink-muted">{run.id}</dd></div></dl></div></div>;
 }
