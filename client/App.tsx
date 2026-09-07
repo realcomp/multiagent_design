@@ -10,6 +10,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Components from "./pages/Components";
 import Trace from "./pages/Trace";
+import RunDetail from "./pages/RunDetail";
 import { AppShell } from "@/components/layout/AppShell";
 
 const queryClient = new QueryClient();
@@ -25,6 +26,8 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/components" element={<Components />} />
             <Route path="/trace" element={<Trace />} />
+            <Route path="/run/:runId" element={<RunDetail />} />
+            <Route path="/runs/:runId" element={<RunDetail />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AppShell>
