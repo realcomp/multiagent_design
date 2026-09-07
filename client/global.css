@@ -1,121 +1,145 @@
-/** @import must precede all other statements */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
-
-/* Theme, content globs, and plugins are declared in tailwind.config.ts. */
 @config "../tailwind.config.ts";
 
 @layer base {
-  /**
-   * Tailwind CSS theme
-   * tailwind.config.ts expects the following color variables to be expressed as HSL values.
-   * A different format will require also updating the theme in tailwind.config.ts.
-  */
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
+    --background: 220 22% 97%;
+    --foreground: 222 33% 13%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
+    --card-foreground: 222 33% 13%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 222 33% 13%;
+    --primary: 221 83% 53%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 18% 94%;
+    --secondary-foreground: 222 33% 13%;
+    --muted: 220 18% 94%;
+    --muted-foreground: 218 12% 45%;
+    --accent: 218 100% 97%;
+    --accent-foreground: 221 83% 39%;
+    --destructive: 0 72% 43%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 15% 88%;
+    --input: 220 15% 83%;
+    --ring: 221 83% 53%;
+    --radius: 0.375rem;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --brand: 221 83% 53%;
+    --brand-dark: 221 83% 42%;
+    --brand-soft: 218 100% 97%;
+    --canvas: 220 22% 97%;
+    --surface: 0 0% 100%;
+    --surface-muted: 220 20% 95.5%;
+    --surface-muted-strong: 220 16% 91%;
+    --ink: 222 33% 13%;
+    --ink-muted: 218 12% 45%;
+    --ink-subtle: 218 11% 58%;
+    --line: 220 15% 88%;
+    --line-strong: 220 14% 79%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --status-success: 153 64% 28%;
+    --status-success-soft: 150 55% 94%;
+    --status-failure: 0 72% 43%;
+    --status-failure-soft: 0 75% 96%;
+    --status-running: 221 83% 45%;
+    --status-running-soft: 218 100% 96%;
+    --status-pending: 32 76% 34%;
+    --status-pending-soft: 38 92% 95%;
+    --status-warning: 32 76% 34%;
+    --status-warning-soft: 38 92% 95%;
+    --confidence-low: 0 72% 50%;
+    --confidence-medium: 35 86% 47%;
+    --confidence-high: 153 64% 35%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 222 33% 9%;
     --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
+    --card: 222 30% 12%;
     --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
+    --popover: 222 30% 12%;
     --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
+    --primary: 217 92% 66%;
+    --primary-foreground: 222 33% 9%;
+    --secondary: 222 25% 17%;
     --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
+    --muted: 222 25% 17%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 222 25% 17%;
+    --accent-foreground: 217 92% 80%;
+    --destructive: 0 63% 55%;
     --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 222 22% 23%;
+    --input: 222 22% 25%;
+    --ring: 217 92% 66%;
+    --brand: 217 92% 66%;
+    --brand-dark: 217 92% 73%;
+    --brand-soft: 222 25% 17%;
+    --canvas: 222 33% 9%;
+    --surface: 222 30% 12%;
+    --surface-muted: 222 25% 15%;
+    --surface-muted-strong: 222 22% 22%;
+    --ink: 210 40% 98%;
+    --ink-muted: 215 20% 65%;
+    --ink-subtle: 215 16% 49%;
+    --line: 222 22% 23%;
+    --line-strong: 222 19% 32%;
+    --status-success: 153 58% 59%;
+    --status-success-soft: 153 30% 17%;
+    --status-failure: 0 78% 68%;
+    --status-failure-soft: 0 32% 17%;
+    --status-running: 217 92% 72%;
+    --status-running-soft: 217 35% 18%;
+    --status-pending: 38 90% 67%;
+    --status-pending-soft: 32 32% 18%;
+    --status-warning: 38 90% 67%;
+    --status-warning-soft: 32 32% 18%;
+    --confidence-low: 0 78% 68%;
+    --confidence-medium: 38 90% 67%;
+    --confidence-high: 153 58% 59%;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
 
+  html {
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+    background: hsl(var(--canvas));
+  }
+
   body {
     @apply bg-background text-foreground;
+    margin: 0;
+    min-width: 320px;
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button,
+  input {
+    font: inherit;
   }
 
   :where(p, span, li, h1, h2, h3, h4, h5, h6, a, button, label, td, th) {
     overflow-wrap: anywhere;
-    word-break: break-word;
   }
 
+  code,
   pre,
-  code {
-    overflow-x: auto;
-    white-space: pre;
+  .font-mono {
+    font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+}
+
+@layer utilities {
+  .section-kicker,
+  .token-label {
+    @apply font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-ink-subtle;
+  }
+
+  .section-title {
+    @apply mt-1 text-lg font-semibold tracking-[-0.03em] text-ink;
   }
 }
