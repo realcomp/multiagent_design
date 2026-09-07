@@ -37,14 +37,14 @@ export default function Components() {
     <div className="mx-auto max-w-[1480px] px-5 py-8 sm:px-8 lg:py-10">
       <div className="mb-8 max-w-2xl">
         <p className="mb-2 text-label font-semibold text-brand">Design system / v1.0</p>
-        <h1 className="text-body font-semibold text-ink">Основа интерфейса</h1>
+        <h1 className="text-title font-semibold text-ink">Основа интерфейса</h1>
         <p className="mt-2 text-body-sm text-ink-muted">Общие токены и примитивы для Runs, Trace и Run detail. Спокойная плотность данных, явные состояния, машинные значения без визуального шума.</p>
       </div>
 
       <section className="mb-8" aria-labelledby="tokens-heading">
         <div className="mb-3 flex items-end justify-between gap-4">
           <div>
-            <h2 id="tokens-heading" className="section-title">Токены</h2>
+            <h2 id="tokens-heading" className="text-subtitle font-semibold text-ink">Токены</h2>
           </div>
           <span className="hidden text-meta text-ink-subtle sm:block">8px spacing scale · light theme</span>
         </div>
@@ -85,7 +85,7 @@ export default function Components() {
 
       <section className="mb-8" aria-labelledby="primitives-heading">
         <div className="mb-3">
-          <h2 id="primitives-heading" className="section-title">Общие примитивы</h2>
+          <h2 id="primitives-heading" className="text-subtitle font-semibold text-ink">Общие примитивы</h2>
         </div>
         <div className="grid gap-4 lg:grid-cols-2">
           <ShowcaseCard title="StatusBadge" description="Статус читается цветом, геометрией и текстом.">
@@ -136,5 +136,5 @@ function TokenSwatch({ name, className }: { name: string; className: string }) {
 }
 
 function ShowcaseCard({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
-  return <div className="border border-line bg-surface p-4 sm:p-5"><div className="mb-4 flex items-start justify-between gap-4"><div><h3 className="text-label font-semibold text-ink">{title}</h3><p className="mt-1 text-body-sm text-ink-muted">{description}</p></div><span className="rounded-[3px] border border-line-strong px-1.5 py-1 text-meta text-ink-subtle">shared</span></div>{children}</div>;
+  return <div className="border border-line bg-surface p-4 sm:p-5"><div className="mb-4 flex items-start justify-between gap-4"><div><h3 className="text-subtitle font-semibold text-ink">{title}</h3><p className="mt-1 text-body-sm text-ink-muted">{description}</p></div><span className="rounded-[3px] border border-line-strong px-1.5 py-1 text-meta text-ink-subtle">shared</span></div>{children}</div>;
 }

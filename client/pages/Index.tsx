@@ -206,7 +206,7 @@ export default function Index() {
     <div className="mx-auto max-w-[1480px] px-5 py-7 sm:px-8 lg:py-9">
       <div className="mb-7 flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
         <div>
-          <h1 className="text-body font-semibold text-ink">Запуски</h1>
+          <h1 className="text-title font-semibold text-ink">Запуски</h1>
           <p className="mt-1.5 max-w-2xl text-body-sm text-ink-muted">Все проверки гипотез и решений в одном месте. Откройте строку, чтобы увидеть ход пайплайна.</p>
         </div>
         <button
@@ -221,7 +221,7 @@ export default function Index() {
       {showNewRun ? (
         <div className="mb-6 border border-brand/25 bg-brand-soft p-4 sm:p-5">
           <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-            <div><p className="text-body font-semibold text-ink">Новая проверка</p><p className="mt-1 text-body-sm text-ink-muted">Опишите гипотезу, которую нужно проверить несколькими независимыми ролями.</p></div>
+            <div><p className="text-subtitle font-semibold text-ink">Новая проверка</p><p className="mt-1 text-body-sm text-ink-muted">Опишите гипотезу, которую нужно проверить несколькими независимыми ролями.</p></div>
             <button type="button" className="inline-flex h-8 shrink-0 items-center justify-center gap-2 rounded-md border border-brand/30 bg-surface px-3 text-label font-semibold text-brand hover:bg-brand-soft"><ArrowUpRight className="size-3.5" /> Открыть форму</button>
           </div>
         </div>
@@ -288,5 +288,5 @@ function RunExpanded({ run }: { run: Run }) {
     if (run.progress && pipelineNames.indexOf(name) < pipelineNames.indexOf(run.progress.current)) return { name, state: "done" };
     return { name, state: "pending" };
   });
-  return <div className="grid gap-4 lg:grid-cols-[1fr_280px] lg:items-start"><div><div className="mb-3 flex items-center justify-between gap-3"><div><p className="text-label font-semibold text-ink-subtle">Прогресс пайплайна</p><p className="mt-1 text-body-sm text-ink-muted">Каждая роль выполняется отдельным вызовом модели.</p></div><span className="font-mono text-meta text-ink-subtle">7 ролей</span></div><PipelineProgress steps={steps} currentStep={run.progress?.current} nextStep={run.progress?.next} /></div><div className="border-l border-line pl-0 lg:pl-4"><p className="text-label font-semibold text-ink-subtle">Метаданные</p><dl className="mt-2 grid grid-cols-2 gap-x-4 gap-y-2 text-meta"><div><dt className="text-ink-subtle">profile</dt><dd className="mt-0.5 font-mono text-ink">{run.profile}</dd></div><div><dt className="text-ink-subtle">стоимость</dt><dd className="mt-0.5 font-mono text-ink">{run.cost}</dd></div><div className="col-span-2"><dt className="text-ink-subtle">run_id</dt><dd className="mt-0.5 truncate font-mono text-meta text-ink-muted">{run.id}</dd></div></dl></div></div>;
+  return <div className="grid gap-4 lg:grid-cols-[1fr_280px] lg:items-start"><div><div className="mb-3 flex items-center justify-between gap-3"><div><p className="text-subtitle font-semibold text-ink-subtle">Прогресс пайплайна</p><p className="mt-1 text-body-sm text-ink-muted">Каждая роль выполняется отдельным вызовом модели.</p></div><span className="font-mono text-meta text-ink-subtle">7 ролей</span></div><PipelineProgress steps={steps} currentStep={run.progress?.current} nextStep={run.progress?.next} /></div><div className="border-l border-line pl-0 lg:pl-4"><p className="text-subtitle font-semibold text-ink-subtle">Метаданные</p><dl className="mt-2 grid grid-cols-2 gap-x-4 gap-y-2 text-meta"><div><dt className="text-ink-subtle">profile</dt><dd className="mt-0.5 font-mono text-ink">{run.profile}</dd></div><div><dt className="text-ink-subtle">стоимость</dt><dd className="mt-0.5 font-mono text-ink">{run.cost}</dd></div><div className="col-span-2"><dt className="text-ink-subtle">run_id</dt><dd className="mt-0.5 truncate font-mono text-meta text-ink-muted">{run.id}</dd></div></dl></div></div>;
 }

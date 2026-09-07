@@ -139,6 +139,6 @@
   }
 
   .section-title {
-    @apply mt-1 text-body font-semibold text-ink;
+    @apply mt-1 text-subtitle font-semibold text-ink;
   }
 }

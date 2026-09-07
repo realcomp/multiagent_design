@@ -100,6 +100,8 @@ export default {
         mono: ["IBM Plex Mono", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       fontSize: {
+        title: ["24px", { lineHeight: "1.25", letterSpacing: "-0.02em" }],
+        subtitle: ["18px", { lineHeight: "1.35", letterSpacing: "-0.01em" }],
         body: ["14px", { lineHeight: "1.5" }],
         "body-sm": ["13px", { lineHeight: "1.5" }],
         label: ["12px", { lineHeight: "1.4" }],
