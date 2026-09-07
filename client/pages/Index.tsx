@@ -38,7 +38,7 @@ const runs: Run[] = [
     id: "7bd2a4de-5b9a-47a4-b0b7-a8e8a31db742",
     date: "06.09.2026, 20:41:28",
     task: "Мне 53 года, у меня уже есть сын, жене 35 лет, была одна неудачная прервавшаяся беременность. Как лучше планировать следующий шаг?",
-    status: "succeeded",
+    status: "completed",
     verdict: "requires_user_data",
     confidence: "низкая",
     profile: "cheap",
@@ -48,7 +48,7 @@ const runs: Run[] = [
     id: "1a9c5e0b-6b9c-4ad5-a839-9375e56de1fd",
     date: "06.09.2026, 20:27:56",
     task: "Во что лучше вложить 100000 шекелей сроком на три года?",
-    status: "succeeded",
+    status: "completed",
     verdict: "requires_user_data",
     confidence: "низкая",
     profile: "debug",
@@ -78,7 +78,7 @@ const runs: Run[] = [
     id: "9f70d002-b3ce-4a7d-bb5a-1a19b6d88c84",
     date: "06.09.2026, 19:46:11",
     task: "Во что лучше вложить 100000 шекелей сроком на три года?",
-    status: "succeeded",
+    status: "completed",
     verdict: "insufficient_evidence",
     confidence: "низкая",
     profile: "mock",
@@ -119,7 +119,7 @@ const runs: Run[] = [
     id: "3dcb47bd-1c54-4b28-b1b8-a7cb54ba5d6e",
     date: "06.09.2026, 04:46:47",
     task: "Падение конверсии в онбординге вызвано новым шагом подтверждения телефона",
-    status: "succeeded",
+    status: "completed",
     verdict: "—",
     confidence: "—",
     profile: "mock",
@@ -127,11 +127,20 @@ const runs: Run[] = [
   },
 ];
 
+const runStatusLabels: Record<RunStatus, string> = {
+  running: "выполняется",
+  completed: "завершён",
+  partial: "частично",
+  failed: "провален",
+  waiting_for_user: "ждёт ответа",
+  resuming: "возобновляется",
+};
+
 const filters = [
   { key: "all", label: "все" },
   { key: "running", label: "выполняется" },
-  { key: "pending", label: "ждёт ответа" },
-  { key: "succeeded", label: "завершён" },
+  { key: "waiting_for_user", label: "ждёт ответа" },
+  { key: "completed", label: "завершён" },
   { key: "partial", label: "частично" },
   { key: "failed", label: "провален" },
 ] as const;
@@ -176,7 +185,7 @@ export default function Index() {
       header: "Статус",
       priority: "medium",
       className: "w-[126px]",
-      render: (run) => <StatusBadge status={run.status} compact />,
+      render: (run) => <StatusBadge status={run.status} label={runStatusLabels[run.status]} compact />,
     },
     {
       key: "verdict",
@@ -230,7 +239,7 @@ export default function Index() {
       <div className="mb-6 grid grid-cols-2 divide-x divide-line border-y border-line bg-surface sm:grid-cols-4">
         <Summary label="Всего запусков" value={`${runs.length}`} detail="за последнее время" />
         <Summary label="Выполняются" value={`${runs.filter((run) => run.status === "running").length}`} detail="требуют внимания" tone="blue" />
-        <Summary label="Завершены" value={`${runs.filter((run) => run.status === "succeeded").length}`} detail="с финальным ответом" tone="green" />
+        <Summary label="Завершены" value={`${runs.filter((run) => run.status === "completed").length}`} detail="с финальным ответом" tone="green" />
         <Summary label="Средняя стоимость" value="$0.16" detail="на один запуск" />
       </div>
 
@@ -282,7 +291,7 @@ function Confidence({ value }: { value: Run["confidence"] }) {
 
 function RunExpanded({ run }: { run: Run }) {
   const steps: PipelineStep[] = pipelineNames.map((name) => {
-    if (run.status === "succeeded") return { name, state: "done" };
+    if (run.status === "completed") return { name, state: "done" };
     if (run.progress?.failed === name) return { name, state: "failed" };
     if (run.progress?.current === name) return { name, state: "running" };
     if (run.progress && pipelineNames.indexOf(name) < pipelineNames.indexOf(run.progress.current)) return { name, state: "done" };

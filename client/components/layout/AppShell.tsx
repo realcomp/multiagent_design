@@ -1,4 +1,4 @@
-import { Activity, Boxes, CircleHelp, LogOut } from "lucide-react";
+import { Activity, Boxes, CircleHelp, GitBranch, LogOut } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
@@ -31,6 +31,17 @@ export function AppShell({ children }: AppShellProps) {
                 }
               >
                 <Activity className="size-3.5" /> Запуски
+              </NavLink>
+              <NavLink
+                to="/trace"
+                className={({ isActive }) =>
+                  cn(
+                    "inline-flex items-center gap-2 border-b-2 px-3 py-[22px] text-label font-medium transition-colors",
+                    isActive ? "border-brand text-ink" : "border-transparent text-ink-muted hover:text-ink",
+                  )
+                }
+              >
+                <GitBranch className="size-3.5" /> Трассировка
               </NavLink>
               <NavLink
                 to="/components"

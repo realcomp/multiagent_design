@@ -9,6 +9,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Components from "./pages/Components";
+import Trace from "./pages/Trace";
 import { AppShell } from "@/components/layout/AppShell";
 
 const queryClient = new QueryClient();
@@ -23,6 +24,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/components" element={<Components />} />
+            <Route path="/trace" element={<Trace />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AppShell>

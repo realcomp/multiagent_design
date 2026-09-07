@@ -4,7 +4,7 @@ import { useState } from "react";
 import { DataTable, type DataTableColumn } from "@/components/review/DataTable";
 import { MetricCell } from "@/components/review/MetricCell";
 import { PipelineProgress, type PipelineStep } from "@/components/review/PipelineProgress";
-import { StatusBadge, type RunStatus } from "@/components/review/StatusBadge";
+import { StatusBadge, type StatusBadgeStatus } from "@/components/review/StatusBadge";
 
 const pipelineSteps: PipelineStep[] = [
   { name: "framer", state: "done" },
@@ -16,7 +16,15 @@ const pipelineSteps: PipelineStep[] = [
   { name: "judge", state: "pending" },
 ];
 
-const statusStates: RunStatus[] = ["succeeded", "failed", "running", "pending", "partial"];
+const statusStates: Array<{ status: StatusBadgeStatus; label: string }> = [
+  { status: "completed", label: "завершён" },
+  { status: "succeeded", label: "успешно" },
+  { status: "failed", label: "ошибка" },
+  { status: "running", label: "выполняется" },
+  { status: "waiting_for_user", label: "ждёт ответа" },
+  { status: "resuming", label: "возобновляется" },
+  { status: "partial", label: "частично" },
+];
 
 interface SpecimenRow {
   id: string;
@@ -90,7 +98,7 @@ export default function Components() {
         <div className="grid gap-4 lg:grid-cols-2">
           <ShowcaseCard title="StatusBadge" description="Статус читается цветом, геометрией и текстом.">
             <div className="flex flex-wrap gap-2">
-              {statusStates.map((status) => <StatusBadge key={status} status={status} />)}
+              {statusStates.map(({ status, label }) => <StatusBadge key={`${status}-${label}`} status={status} label={label} />)}
             </div>
           </ShowcaseCard>
           <ShowcaseCard title="MetricCell" description="Компактные значения для cost, tokens и latency.">

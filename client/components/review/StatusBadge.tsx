@@ -8,56 +8,64 @@ import {
 import { cn } from "@/lib/utils";
 
 export type RunStatus =
-  | "succeeded"
+  | "completed"
   | "failed"
   | "running"
-  | "pending"
-  | "partial";
+  | "partial"
+  | "waiting_for_user"
+  | "resuming";
+
+export type AgentRunStatus = "succeeded" | "failed" | "running";
+export type StatusBadgeStatus = RunStatus | AgentRunStatus;
 
 const statusConfig: Record<
-  RunStatus,
+  StatusBadgeStatus,
   {
-    label: string;
     icon: typeof Check;
     className: string;
     iconClassName?: string;
   }
 > = {
+  completed: {
+    icon: Check,
+    className: "border-status-success/30 bg-status-success-soft text-status-success",
+  },
   succeeded: {
-    label: "завершён",
     icon: Check,
     className: "border-status-success/30 bg-status-success-soft text-status-success",
   },
   failed: {
-    label: "провален",
     icon: X,
     className: "border-status-failure/30 bg-status-failure-soft text-status-failure",
   },
   running: {
-    label: "выполняется",
     icon: Loader2,
     className: "border-status-running/30 bg-status-running-soft text-status-running",
     iconClassName: "animate-spin",
   },
-  pending: {
-    label: "ждёт ответа",
+  waiting_for_user: {
     icon: Clock3,
     className: "border-status-pending/30 bg-status-pending-soft text-status-pending",
   },
+  resuming: {
+    icon: Loader2,
+    className: "border-status-running/30 bg-status-running-soft text-status-running",
+    iconClassName: "animate-spin",
+  },
   partial: {
-    label: "частично",
     icon: CircleDashed,
     className: "border-status-warning/30 bg-status-warning-soft text-status-warning",
   },
 };
 
 interface StatusBadgeProps {
-  status: RunStatus;
+  status: StatusBadgeStatus;
+  label: string;
   compact?: boolean;
   className?: string;
 }
 
-export function StatusBadge({ status, compact = false, className }: StatusBadgeProps) {
+export function StatusBadge({ status, label, compact = false, className }: StatusBadgeProps) {
   const config = statusConfig[status];
   const Icon = config.icon;
 
@@ -79,11 +87,7 @@ export function StatusBadge({ status, compact = false, className }: StatusBadgeP
       >
         <Icon className="size-2.5" strokeWidth={2.5} />
       </span>
-      <span>{config.label}</span>
+      <span>{label}</span>
     </span>
   );
-}
-
-export function getStatusLabel(status: RunStatus) {
-  return statusConfig[status].label;
 }

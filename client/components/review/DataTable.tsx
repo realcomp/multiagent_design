@@ -1,3 +1,5 @@
+"use client";
+
 import { Fragment } from "react";
 import { ChevronDown, ChevronRight, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
