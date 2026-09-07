@@ -2,8 +2,10 @@
 
 import { useMemo, useState } from "react";
 import { ArrowUpRight, ChevronDown, Filter, Plus, Search, SlidersHorizontal } from "lucide-react";
+import { ConfidenceIndicator, type ConfidenceLevel } from "@/components/review/ConfidenceIndicator";
 import { DataTable, type DataTableColumn } from "@/components/review/DataTable";
 import { MetricCell } from "@/components/review/MetricCell";
+import { VerdictLabel, type VerdictValue } from "@/components/review/VerdictLabel";
 import { PipelineProgress, type PipelineStep } from "@/components/review/PipelineProgress";
 import { StatusBadge, type RunStatus } from "@/components/review/StatusBadge";
 import { cn } from "@/lib/utils";
@@ -13,8 +15,8 @@ interface Run {
   date: string;
   task: string;
   status: RunStatus;
-  verdict: "requires_user_data" | "insufficient_evidence" | "—";
-  confidence: "низкая" | "средняя" | "высокая" | "—";
+  verdict: VerdictValue | null;
+  confidence: ConfidenceLevel | null;
   profile: "cheap" | "debug" | "mock";
   cost: string;
   progress?: { current: string; next: string; failed?: string };
@@ -28,8 +30,8 @@ const runs: Run[] = [
     date: "07.09.2026, 03:34:39",
     task: "Предложи мне вектора для развития сервиса. Я думаю, что можно добавить в него загрузку документов, добавить «платность» в формате «первые два прогона на недорогих моделях бесплатно, а далее — по тарифу x2 от реальной стоимости».",
     status: "running",
-    verdict: "—",
-    confidence: "—",
+    verdict: null,
+    confidence: null,
     profile: "cheap",
     cost: "$0.29",
     progress: { current: "claim_extractor", next: "judge" },
@@ -40,7 +42,7 @@ const runs: Run[] = [
     task: "Мне 53 года, у меня уже есть сын, жене 35 лет, была одна неудачная прервавшаяся беременность. Как лучше планировать следующий шаг?",
     status: "completed",
     verdict: "requires_user_data",
-    confidence: "низкая",
+    confidence: "low",
     profile: "cheap",
     cost: "$0.54",
   },
@@ -50,7 +52,7 @@ const runs: Run[] = [
     task: "Во что лучше вложить 100000 шекелей сроком на три года?",
     status: "completed",
     verdict: "requires_user_data",
-    confidence: "низкая",
+    confidence: "low",
     profile: "debug",
     cost: "$0.15",
   },
@@ -59,8 +61,8 @@ const runs: Run[] = [
     date: "06.09.2026, 20:16:30",
     task: "Во что лучше вложить 100000 шекелей сроком на три года?",
     status: "partial",
-    verdict: "—",
-    confidence: "—",
+    verdict: null,
+    confidence: null,
     profile: "debug",
     cost: "$0.14",
   },
@@ -69,8 +71,8 @@ const runs: Run[] = [
     date: "06.09.2026, 19:47:03",
     task: "Во что лучше вложить 100000 шекелей сроком на три года?",
     status: "partial",
-    verdict: "—",
-    confidence: "—",
+    verdict: null,
+    confidence: null,
     profile: "debug",
     cost: "$0.08",
   },
@@ -80,7 +82,7 @@ const runs: Run[] = [
     task: "Во что лучше вложить 100000 шекелей сроком на три года?",
     status: "completed",
     verdict: "insufficient_evidence",
-    confidence: "низкая",
+    confidence: "low",
     profile: "mock",
     cost: "$0.00",
   },
@@ -89,8 +91,8 @@ const runs: Run[] = [
     date: "06.09.2026, 19:05:32",
     task: "Во что лучше вложить 100000 шекелей сроком на три года?",
     status: "running",
-    verdict: "—",
-    confidence: "—",
+    verdict: null,
+    confidence: null,
     profile: "debug",
     cost: "$0.09",
     progress: { current: "advocate", next: "skeptic" },
@@ -100,8 +102,8 @@ const runs: Run[] = [
     date: "06.09.2026, 18:57:58",
     task: "Во что лучше вложить 100000 шекелей сроком на три года?",
     status: "partial",
-    verdict: "—",
-    confidence: "—",
+    verdict: null,
+    confidence: null,
     profile: "debug",
     cost: "$0.13",
   },
@@ -110,8 +112,8 @@ const runs: Run[] = [
     date: "06.09.2026, 12:05:05",
     task: "Во что лучше вложить 100000 шекелей сроком на три года?",
     status: "partial",
-    verdict: "—",
-    confidence: "—",
+    verdict: null,
+    confidence: null,
     profile: "debug",
     cost: "$0.14",
   },
@@ -120,8 +122,8 @@ const runs: Run[] = [
     date: "06.09.2026, 04:46:47",
     task: "Падение конверсии в онбординге вызвано новым шагом подтверждения телефона",
     status: "completed",
-    verdict: "—",
-    confidence: "—",
+    verdict: null,
+    confidence: null,
     profile: "mock",
     cost: "$0.00",
   },
@@ -192,14 +194,14 @@ export default function Index() {
       header: "Вердикт",
       priority: "medium",
       className: "w-[154px]",
-      render: (run) => <Verdict value={run.verdict} />,
+      render: (run) => <VerdictLabel verdict={run.verdict} />,
     },
     {
       key: "confidence",
       header: "Уверенность",
       priority: "medium",
       className: "w-[122px]",
-      render: (run) => <Confidence value={run.confidence} />,
+      render: (run) => <ConfidenceIndicator level={run.confidence} />,
     },
     {
       key: "cost",
@@ -274,19 +276,6 @@ export default function Index() {
 
 function Summary({ label, value, detail, tone = "neutral" }: { label: string; value: string; detail: string; tone?: "neutral" | "blue" | "green" }) {
   return <div className="min-w-0 px-4 py-3.5 sm:px-5"><div className="flex items-center gap-2"><span className={cn("size-1.5 rounded-full", tone === "blue" ? "bg-brand" : tone === "green" ? "bg-status-success" : "bg-ink-subtle")} /><span className="truncate text-label text-ink-subtle">{label}</span></div><p className="mt-1.5 font-mono text-body font-medium text-ink">{value}</p><p className="mt-0.5 truncate text-meta text-ink-subtle">{detail}</p></div>;
-}
-
-function Verdict({ value }: { value: Run["verdict"] }) {
-  if (value === "—") return <span className="font-mono text-meta text-ink-subtle">—</span>;
-  const label = value === "requires_user_data" ? "нужны данные" : "недостаточно данных";
-  return <span className={cn("inline-flex max-w-full items-center gap-1.5 text-label font-medium", value === "requires_user_data" ? "text-status-warning" : "text-ink-muted")}><span className={cn("size-1.5 shrink-0 rounded-[2px]", value === "requires_user_data" ? "bg-status-warning" : "bg-ink-subtle")} /><span className="truncate">{label}</span></span>;
-}
-
-function Confidence({ value }: { value: Run["confidence"] }) {
-  if (value === "—") return <span className="font-mono text-meta text-ink-subtle">—</span>;
-  const level = value === "низкая" ? 1 : value === "средняя" ? 2 : 3;
-  const color = value === "низкая" ? "bg-confidence-low" : value === "средняя" ? "bg-confidence-medium" : "bg-confidence-high";
-  return <div className="flex items-center gap-2" title={`Уверенность: ${value}`}><span className="flex items-end gap-[2px]" aria-hidden="true">{[1, 2, 3].map((bar) => <span key={bar} className={cn("w-1 rounded-[1px]", bar <= level ? color : "bg-line-strong")} style={{ height: 5 + bar * 3 }} />)}</span><span className="text-label text-ink-muted">{value}</span></div>;
 }
 
 function RunExpanded({ run }: { run: Run }) {

@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { ConfidenceIndicator, type ConfidenceLevel } from "@/components/review/ConfidenceIndicator";
 import { DataTable, type DataTableColumn } from "@/components/review/DataTable";
 import { MetricCell } from "@/components/review/MetricCell";
+import { VerdictLabel, type VerdictValue } from "@/components/review/VerdictLabel";
 import { PipelineProgress, type PipelineStep } from "@/components/review/PipelineProgress";
 import { StatusBadge, type StatusBadgeStatus } from "@/components/review/StatusBadge";
 
@@ -25,6 +27,9 @@ const statusStates: Array<{ status: StatusBadgeStatus; label: string }> = [
   { status: "resuming", label: "возобновляется" },
   { status: "partial", label: "частично" },
 ];
+
+const confidenceStates: Array<ConfidenceLevel | null> = ["low", "medium", "high", null];
+const verdictStates: Array<VerdictValue | null> = ["support", "support_with_modifications", "insufficient_evidence", "oppose", "requires_user_data", null];
 
 interface SpecimenRow {
   id: string;
@@ -99,6 +104,16 @@ export default function Components() {
           <ShowcaseCard title="StatusBadge" description="Статус читается цветом, геометрией и текстом.">
             <div className="flex flex-wrap gap-2">
               {statusStates.map(({ status, label }) => <StatusBadge key={`${status}-${label}`} status={status} label={label} />)}
+            </div>
+          </ShowcaseCard>
+          <ShowcaseCard title="ConfidenceIndicator" description="Три уровня уверенности и нейтральное состояние без данных.">
+            <div className="flex flex-wrap items-center gap-4">
+              {confidenceStates.map((level) => <ConfidenceIndicator key={level ?? "null"} level={level} />)}
+            </div>
+          </ShowcaseCard>
+          <ShowcaseCard title="VerdictLabel" description="Единый словарь и цветовая семантика для всех пяти вердиктов.">
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
+              {verdictStates.map((verdict) => <VerdictLabel key={verdict ?? "null"} verdict={verdict} />)}
             </div>
           </ShowcaseCard>
           <ShowcaseCard title="MetricCell" description="Компактные значения для cost, tokens и latency.">

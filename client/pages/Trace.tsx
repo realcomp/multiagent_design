@@ -3,9 +3,11 @@
 import { useState } from "react";
 import { ArrowLeft, AlertTriangle, RotateCcw } from "lucide-react";
 import { Link } from "react-router-dom";
+import { ConfidenceIndicator, type ConfidenceLevel } from "@/components/review/ConfidenceIndicator";
 import { DataTable, type DataTableColumn } from "@/components/review/DataTable";
 import { MetricCell } from "@/components/review/MetricCell";
 import { StatusBadge, type AgentRunStatus } from "@/components/review/StatusBadge";
+import { VerdictLabel, type VerdictValue } from "@/components/review/VerdictLabel";
 import { cn } from "@/lib/utils";
 
 interface AgentRun {
@@ -35,12 +37,9 @@ const agentStatusLabels: Record<AgentRunStatus, string> = {
   running: "выполняется",
 };
 
-const verdictLabels: Record<string, string> = {
-  support: "поддерживает",
-  support_with_modifications: "поддерживает с изменениями",
-  insufficient_evidence: "недостаточно данных",
-  oppose: "не поддерживает",
-  requires_user_data: "нужны данные пользователя",
+const traceSummary: { verdict: VerdictValue | null; confidence: ConfidenceLevel | null } = {
+  verdict: "support_with_modifications",
+  confidence: "medium",
 };
 
 const runs: AgentRun[] = [
@@ -264,7 +263,7 @@ export default function Trace() {
         <StatusBadge status="running" label="выполняется" />
       </div>
 
-      <SummaryStrip />
+      <SummaryStrip verdict={traceSummary.verdict} confidence={traceSummary.confidence} />
 
       <div className="mb-3 mt-7 flex flex-col justify-between gap-2 sm:flex-row sm:items-end">
         <div>
@@ -293,7 +292,7 @@ export default function Trace() {
   );
 }
 
-function SummaryStrip() {
+function SummaryStrip({ verdict, confidence }: { verdict: VerdictValue | null; confidence: ConfidenceLevel | null }) {
   return (
     <div className="grid grid-cols-2 divide-x divide-y divide-line border-y border-line bg-surface sm:grid-cols-3 lg:grid-cols-6 lg:divide-y-0">
       <SummaryMetric label="Стоимость" value="$0.4557" />
@@ -305,11 +304,11 @@ function SummaryStrip() {
       <div className="col-span-2 flex min-w-0 items-center justify-between gap-4 px-4 py-3.5 sm:col-span-3 lg:col-span-6 lg:border-t lg:border-line lg:px-5">
         <div className="flex min-w-0 items-center gap-3">
           <span className="text-label text-ink-subtle">Вердикт</span>
-          <span className="truncate text-body-sm font-medium text-ink">{verdictLabels.support_with_modifications}</span>
+          <VerdictLabel verdict={verdict} />
         </div>
         <div className="flex shrink-0 items-center gap-2">
           <span className="text-label text-ink-subtle">Уверенность</span>
-          <ConfidenceIndicator />
+          <ConfidenceIndicator level={confidence} />
         </div>
       </div>
     </div>
@@ -324,17 +323,6 @@ function SummaryMetric({ label, value, unit, secondary, tone = "neutral" }: { la
         <span className="truncate text-label text-ink-subtle">{label}</span>
       </div>
       <MetricCell value={value} unit={unit} secondary={secondary} className="mt-1.5" />
-    </div>
-  );
-}
-
-function ConfidenceIndicator() {
-  return (
-    <div className="flex items-center gap-2" title="Уверенность: средняя">
-      <span className="flex items-end gap-[2px]" aria-hidden="true">
-        {[1, 2, 3].map((bar) => <span key={bar} className={cn("w-1 rounded-[1px]", bar <= 2 ? "bg-confidence-medium" : "bg-line-strong")} style={{ height: 5 + bar * 3 }} />)}
-      </span>
-      <span className="text-label text-ink">средняя</span>
     </div>
   );
 }
